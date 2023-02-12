@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <h4 style="text-align: center;">Student Profile</h4>
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <form method="POST" enctype="multipart/form-data" style="font-size: 20px;">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                            <br>
+                            <input style="font-size: 20px; padding-left: 20px; padding-right: 20px;" class="btn btn-primary" type="submit" name="Update Information">
+                        </form>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <h4 style="text-align: center;">GPA CALCULATOR</h4>
+            <p style="text-align: center;">Note: Exclude EPIC and NSTP subjects grade in the calculation.</p>
+            <div class="card shadow">
+                <div class="card-body" style="margin: 20px;">
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <p style="text-align: center; font-size: 20px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px;">Your Semester GPA is:</p>
+                        <p style="text-align: center; font-size: 40px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px;">{{ gpa|floatformat:4 }}</p>
+                        <table id="table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Grades</th>
+                                    <th style="text-align: center;">Units</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ form.grade1|as_crispy_field }}</td>
+                                    <td>{{ form.units1|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade2|as_crispy_field }}</td>
+                                    <td>{{ form.units2|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade3|as_crispy_field }}</td>
+                                    <td>{{ form.units3|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade4|as_crispy_field }}</td>
+                                    <td>{{ form.units4|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade5|as_crispy_field }}</td>
+                                    <td>{{ form.units5|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade6|as_crispy_field }}</td>
+                                    <td>{{ form.units6|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade7|as_crispy_field }}</td>
+                                    <td>{{ form.units7|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade8|as_crispy_field }}</td>
+                                    <td>{{ form.units8|as_crispy_field }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ form.grade9|as_crispy_field }}</td>
+                                    <td>{{ form.units9|as_crispy_field }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        
+                        <div style="text-align: center;">
+                            <input class="btn btn-info" type="submit" value="Calculate GPA">
+                        </div>
+                        <button style="font-size: 15px; padding-left: 20px; padding-right: 20px; float: right;" type="button" class="btn btn-primary"><a href="{% url 'gpa' %}" style="text-decoration: none;">OK</a></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+
+
+{% endblock %}

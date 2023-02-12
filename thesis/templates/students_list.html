@@ -1,0 +1,265 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}USER{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Dashboard</title>
+  <link href="{%static 'css/profile.css' %}" rel="stylesheet" />
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link href="{%static 'css/main.css' %}" rel="stylesheet" />
+  <link href="{%static 'theme/css/styles.css' %}" rel="stylesheet" />
+
+	<script>
+		$(document).ready(function(){
+			$(".hamburger .hamburger__inner").click(function(){
+			  $(".wrapper").toggleClass("active")
+			})
+
+			$(".top_navbar .fas").click(function(){
+			   $(".profile_dd").toggleClass("active");
+			});
+		})
+	</script>
+</head>
+<body>
+  <div class="wrapper" style="background-color: white;" >
+    <nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav" >
+      <div class="top_navbar">
+        <div class="hamburger">
+          <div class="hamburger__inner">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+          </div>
+        </div>
+        <div class="menu">
+          <div class="logo">
+            Students Academic Prediction
+          </div>
+          <div class="right_menu">
+            <ul>
+              <li><i class="fas fa-user"></i>
+                <div class="profile_dd">
+                  <span style="float:right; padding-right: 7px;">
+                    {% if user.is_authenticated %}
+                        {% url 'profile' as profile_url %}
+                        <span> Hi {% if request.path == profile_url %}{{ user.username}}{% else %}<a style="color: black; text-decoration: none;" href="">{{ user.username}}</a>{% endif %}!</span>
+                        <a style="color: black;  text-decoration: none;" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                    <span>
+                        <a href="{% url 'login' %}">Login</a>
+                    </span>
+                    {% endif %}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+      *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-family:  "Poppins";
+      }
+
+        .main_container .sidebar{
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: #DC143C;
+        transition: all 0.3s ease;
+        }
+
+        .top_navbar .hamburger{
+        width: 103px;
+        background: #DC143C;
+        position: relative;
+        font-size: 28px;
+        }
+
+        .wrapper.active .sidebar{
+        width: 100px;
+        }
+
+        @media (min-width: 1400px) {
+      .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
+        }
+      }
+      .main_container .container{
+        margin-top: -60px;
+      width: calc(100% - 225px);
+      margin-left: 225px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      }
+
+      .top_navbar .menu .right_menu ul {
+      display: flex;
+      PADDING-TOP: 15px;
+      }
+
+    </style>
+    
+    <div class="main_container">
+        <div class="sidebar">
+            <div class="sidebar__inner">
+              <div class="profile">
+                <div class="img">
+                  <img src="static/acc-img/wmsu.png" alt="profile_pic">
+                </div>
+                <div class="profile_info">
+                  <h3>Welcome</h3>
+                  {% if user.is_authenticated %}
+                      {% url 'profile' as profile_url %}
+                      <span>{% if request.path == profile_url %}{{ user.username}}{% else %}<a href="" style="color: white; text-transform: uppercase; text-decoration: none;">{{ user.username}}</a>{% endif %}!</span>
+                  {% endif %}
+                </div>
+              </div>
+              <ul style="text-decoration: none;">
+                <li>
+                  <a href="{% url 'analytics' %}">
+                    <span class="icon"><i class="fas fa-chart-pie"></i></span>
+                    <span class="title">Analytics</span>
+                  </a>
+                </li>
+                <li >
+                  <a href="{% url 'prediction' %}">
+                    <span class="icon"><i class="fab fa-elementor"></i></span>
+                    <span  class="title">Prediction List</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'students_list' %}">
+                    <span class="icon"><i class="fab fa-elementor"></i></span>
+                    <span class="title">Student List</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'index' %}">
+                    <span class="icon"><i class="fas fa-border-all"></i></span>
+                    <span class="title">Home</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </div>
+        <div class="container">
+          <div class="row" style="margin: 20px;">
+            <div class="col">
+              <div class="col-md">
+                <div class="card text-center text-white mb-4"  id="total-students">
+                  <div class="card-header" style="background-color: #575656;">
+                    <h5 class="card-title">TOTAL STUDENTS</h5>
+                  </div>
+                  <div class="card-body" style="background-color: #ebebeb;">
+                    <h3 class="card-title" style="color: black;">{{total_students}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h4 class="modal-title" id="classModalLabel" style="padding-left: 20px;"> 
+              STUDENTS LIST
+          </h4>
+            
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                  <div class="card card-body">
+                    <form method="get">
+                      <div><style></style> {{studFilter.form}}</div>
+                      <button class="btn btn-primary" type="submit" >Search</button>
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row" style="margin: 0px;">
+            <div class="modal-body">
+                <div class="card card-body">
+                  <h5 class="btn btn-secondary btn-sm btn-block" 
+                  style="background-color: #575656; font-size: large; font-weight: 800;">STUDENTS INFORMATION</h5>
+                  <div style="height: 700px; overflow: auto">
+                    <table id="classTable" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th style="text-align: center;">Student ID</th>
+                          <th style="text-align: center;">First Name</th>
+                          <th style="text-align: center;">Last Name</th>
+                          <th style="text-align: center;">Course</th>
+                          <th style="text-align: center;">Year</th>
+                          <th style="text-align: center;">Age</th>
+                          <th style="text-align: center;">Sex</th>
+                          <th style="text-align: center;">Contact Number</th>
+                          <th style="text-align: center;">Email</th>
+                          <th style="text-align: center;">Date Created</th>
+                          <th style="text-align: center;">Action</th>
+                          
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for stud in students %}
+                        <tr>
+                          <td>{{ stud.studentID }}</td>
+                          <td>{{ stud.firstname }}</td>
+                          <td>{{ stud.lastname }}</td>
+              
+                          <td>{% if stud.stud_course == 1 %} <p>BS Community Development</p> 
+                            {% elif  stud.stud_course == 2 %} <p>BS Information Technology</p> 
+                            {% elif  stud.stud_course == 3 %} <p>BS Computer Science</p>
+                            {% else %} <p>BS Social Work</p> {% endif %}</td>
+              
+                          <td>{{ stud.stud_year }}</td>
+                          <td>{{ stud.stud_age }}</td>
+                          <td>{% if stud.stud_sex == 0 %} <p>Female</p> {% else %} <p>Male</p> {% endif %}</td>
+                          <td>{{ stud.phone }}</td>
+                          <td>{{ stud.email }}</td>
+                          <td>{{ stud.date_created }}</td>
+                          <td style="text-align: center;"><button class="btn btn-primary"><i class="fa fa-eye"></i> <a href="{% url 'user' stud.id %}" style="text-decoration: none; color: white;">View</a></button></td>
+                         
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+          <div class="modal-footer">
+
+          </div>
+          </div>
+    </div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity= "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
+
+<script>
+  $('#classModal').modal('show')
+</script>
+</body>
+</html>
+
+{% endblock %}

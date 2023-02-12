@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Let's Predict{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <h4 style="text-align: center;">Students Academic Performance Prediction</h4>
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <!-- {{ form|crispy }} -->
+                        <div>
+                            <h4>Student Information:</h4>
+                            {{ form.students|as_crispy_field }}
+                            {{ form.studentId|as_crispy_field }}
+                            {{ form.age|as_crispy_field }}
+                            {{ form.sex|as_crispy_field }}
+                            {{ form.course|as_crispy_field }}
+                            {{ form.year|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Demographic Information:</h4>
+                            {{ form.status|as_crispy_field }}
+                            {{ form.scholar|as_crispy_field }}
+                            {{ form.wstud|as_crispy_field }}
+                            {{ form.personality|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h3>STUDY HABITS</h3>
+                            <h4>Time Management</h4>
+                            {{ form.TM3|as_crispy_field }}
+                            {{ form.TM4|as_crispy_field }}
+                            {{ form.TM5|as_crispy_field }}
+                            {{ form.TM6|as_crispy_field }}
+                            {{ form.TM7|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Class Attendance and Participation</h4>
+                            {{ form.CAP2|as_crispy_field }}
+                            {{ form.CAP3|as_crispy_field }}
+                            {{ form.CAP4|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>General Study Strategy</h4>
+                            {{ form.GSS1|as_crispy_field }}
+                            {{ form.GSS2|as_crispy_field }}
+                            {{ form.GSS3|as_crispy_field }}
+                            {{ form.GSS4|as_crispy_field }}
+                            {{ form.GSS5|as_crispy_field }}
+                            {{ form.GSS6|as_crispy_field }}
+                            {{ form.GSS7|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Exam Preparation</h4>
+                            {{ form.EP1|as_crispy_field }}
+                            {{ form.EP2|as_crispy_field }}
+                            {{ form.EP3|as_crispy_field }}
+                            {{ form.EP5|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Note Taking</h4>
+                            {{ form.NT1|as_crispy_field }}
+                            {{ form.NT2|as_crispy_field }}
+                            {{ form.NT3|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Available Resources Usage</h4>
+                            {{ form.desktop|as_crispy_field }}
+                            {{ form.laptop|as_crispy_field }}
+                            {{ form.mobile|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Internet Connectivity Usage</h4>
+                            {{ form.wifi|as_crispy_field }}
+                            {{ form.c_data|as_crispy_field }}
+                        </div>
+                        <br>
+                        <div>
+                            <h4>Internet Connectivity Status</h4>
+                            {{ form.h_speed|as_crispy_field }}
+                            {{ form.l_speed|as_crispy_field }}
+                        </div>
+                        <br>
+                        <input class="btn btn-info" type="submit" value="Make Prediction">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+
+
+{% endblock %}

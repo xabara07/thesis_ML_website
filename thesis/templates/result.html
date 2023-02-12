@@ -1,0 +1,1372 @@
+{% extends 'base.html' %}
+
+{% block title %}RESULT{% endblock %}
+
+{% block content %}
+<br>
+<hr>
+
+<style>
+  .masthead-rs {
+    background-image: url("../acc-img/result.jpg");
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>
+
+<h3 style="text-align: center;">Students Academic Performance</h3>
+<hr>
+
+<div style="background-color: aliceblue;" class="masthead-rs bg-primary text-white text-center">
+  <div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+          <br>
+            <div class="card shadow">
+                <div class="card-body" style="padding: 40px;">
+                    <div class="card-body">
+                      <table id="classTable" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col" style="text-align: center;">Prediction</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style="text-align: center; font-size: 50px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px;">
+                                {% if predicted_acads.predictions == 4 %} <p>Superior</p> 
+                                {%elif predicted_acads.predictions == 5 %} <p>Very-Satisfactory</p>
+                                {% elif predicted_acads.predictions == 3 %} <p>Satisfactory</p>
+                                {% elif predicted_acads.predictions == 2 %} <p> Fairly-Satisfactory</p>
+                                {% elif predicted_acads.predictions == 1 %} <p> Excellent </p>
+                                {% elif predicted_acads.predictions == 0 %} <p> Barely-Satisfactory </p>
+                                {% endif %}
+                              </td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      <br>
+
+                          {% if predicted_acads.predictions == 0 %}
+                          <p style="text-align: center; font-size: 20px; color: #000;">Your are expected to have an Academic Performance of BARELY SATISFACTORY <br>
+                            by the next semester with a gpa between [3.581 - 5.0].</p>  
+                          <hr style="color: black;">
+                          <!-- TIME MANAGEMENT -->
+                          
+                          <table id="classTable" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                  <th>Time Management Percentage</th>
+                                  <th>Class Attendance and Participation Percentage</th>
+                                  <th>General Study Strategy Percentage</th>
+                                  <th>Exam Preparation Percentage</th>
+                                  <th>Note Taking Percentage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_tm|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_cap|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_gss|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_ep|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_nt|floatformat:2 }}%</td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 40.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 60.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+                                  {% elif result_tm == 80.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_cap == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  {% elif result_gss == 47.61904761904761 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p> 
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_ep == 50.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_ep == 75.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+
+                                  {% elif result_ep == 91.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 40.0 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 60.0 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 66.66666666666666 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 80.0 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% else %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p>This level indicates that you are falling below expectations and may need improvement.</P>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</P>
+                                  {% elif result_cap == 55.55555555555556 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% else %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 47.61904761904761 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% else %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+
+                                  {% elif result_ep == 50.0 %} <p>NThis level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+
+                                  {% elif result_ep == 75.0 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+
+                                  {% elif result_ep == 91.66666666666666 %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% else %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p>This level indicates that your note-taking skills are inadequate and may need improvement.</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% else %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                          <hr style="color: black;">
+                          <br>
+
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                          <div class="col-md">
+                            <div class="col-md-12">
+                              <h3 style="color: black;">Study Habits</h3>
+                              <canvas id="myChart" width="500" height="500" style="box-sizing: border-box; height: 500px; width: 500px;"></canvas>
+                              <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: [{% for result in result_list %} '{{ result }}', {% endfor %}],
+                                    datasets: [{
+                                      label: 'Total: ',
+                                      data: [{% for number in result_num %} '{{ number }}', {% endfor %}],
+                                      backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(54, 162, 235, 0.8)',
+                                        'rgba(255, 206, 86, 0.8)',
+                                        'rgba(75, 192, 192, 0.8)',
+                                        'rgba(153, 102, 255, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)',
+                                        'rgba(240, 120, 50, 0.8)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(240, 120, 50, 1)',
+                              
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                  },
+                                  options: {
+                                    scales: {
+                                      y: {
+                                        beginAtZero: true
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                                  <br>
+                            </div>	
+                          </div>
+                          {% endif %}
+
+
+                          {% if predicted_acads.predictions == 4 %}
+                          <p style="text-align: center; font-size: 20px; color: #000;">Your are expected to have an Academic Performance of SUPERIOR <br>
+                            by the next semester with a gpa between [1.0 - 1.7400].</p>  
+                          <br>
+                          <!-- TIME MANAGEMENT -->
+                          <hr style="color: black;">
+                          
+                          <table id="classTable" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                  <th>Time Management Percentage</th>
+                                  <th>Class Attendance and Participation Percentage</th>
+                                  <th>General Study Strategy Percentage</th>
+                                  <th>Exam Preparation Percentage</th>
+                                  <th>Note Taking Percentage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_tm|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_cap|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_gss|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_ep|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_nt|floatformat:2 }}%</td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 40.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 60.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+                                  {% elif result_tm == 80.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_cap == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  {% elif result_gss == 47.61904761904761 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p> 
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_ep == 50.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_ep == 75.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+
+                                  {% elif result_ep == 91.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 40.0 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 60.0 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 66.66666666666666 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 80.0 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% else %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p>This level indicates that you are falling below expectations and may need improvement.</P>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</P>
+                                  {% elif result_cap == 55.55555555555556 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% else %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 47.61904761904761 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% else %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+
+                                  {% elif result_ep == 50.0 %} <p>NThis level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+
+                                  {% elif result_ep == 75.0 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+
+                                  {% elif result_ep == 91.66666666666666 %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% else %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p>This level indicates that your note-taking skills are inadequate and may need improvement.</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% else %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+
+                          <hr style="color: black;">
+                          <br> 
+
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                          <div class="col-md">
+                            <div class="col-md-12">
+                              <h3 style="color: black;">Study Habits</h3>
+                              <canvas id="myChart" width="500" height="500" style="box-sizing: border-box; height: 500px; width: 500px;"></canvas>
+                              <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: [{% for result in result_list %} '{{ result }}', {% endfor %}],
+                                    datasets: [{
+                                      label: 'Total: ',
+                                      data: [{% for number in result_num %} '{{ number }}', {% endfor %}],
+                                      backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(193, 37, 83, 0.8)',
+                                        'rgba(89, 89, 89, 0.8)',
+                                        'rgba(44, 44, 44, 0.8)',
+                                        'rgba(75, 0, 0, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)',
+                                        'rgba(240, 120, 50, 0.8)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(193, 37, 83, 1)',
+                                        'rgba(89, 89, 89, 1)',
+                                        'rgba(44, 44, 44, 1)',
+                                        'rgba(75, 0, 0, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(240, 120, 50, 1)',
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                  },
+                                  options: {
+                                    scales: {
+                                      y: {
+                                        beginAtZero: true
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                                  <br>
+                            </div>	
+                          </div>            
+                          
+                          {% endif %}
+
+                          {% if predicted_acads.predictions == 5 %}
+                          <p style="text-align: center; font-size: 20px; color: #000;">Your are expected to have an Academic Performance of VERY SATISFACTORY<br>
+                          by the next semester with a gpa between [1.7500 - 2.2560].</p>  
+                          <br>
+                          <hr style="color: black;">
+
+                          <table id="classTable" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                  <th>Time Management Percentage</th>
+                                  <th>Class Attendance and Participation Percentage</th>
+                                  <th>General Study Strategy Percentage</th>
+                                  <th>Exam Preparation Percentage</th>
+                                  <th>Note Taking Percentage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_tm|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_cap|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_gss|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_ep|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_nt|floatformat:2 }}%</td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 40.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 60.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+                                  {% elif result_tm == 80.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_cap == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  {% elif result_gss == 47.61904761904761 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p> 
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_ep == 50.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_ep == 75.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+
+                                  {% elif result_ep == 91.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 40.0 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 60.0 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 66.66666666666666 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 80.0 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% else %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p>This level indicates that you are falling below expectations and may need improvement.</P>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</P>
+                                  {% elif result_cap == 55.55555555555556 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% else %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 47.61904761904761 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% else %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+
+                                  {% elif result_ep == 50.0 %} <p>NThis level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+
+                                  {% elif result_ep == 75.0 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+
+                                  {% elif result_ep == 91.66666666666666 %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% else %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p>This level indicates that your note-taking skills are inadequate and may need improvement.</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% else %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                          <hr style="color: black;">
+                          <br> 
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                          <div class="col-md">
+                            <div class="col-md-12">
+                              <h3 style="color: black;">STUDY HABITS</h3>
+                              <canvas id="myChart" width="500" height="500" style="box-sizing: border-box; height: 500px; width: 500px;"></canvas>
+                              <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: [{% for result in result_list %} '{{ result }}', {% endfor %}],
+                                    datasets: [{
+                                      label: 'Total: ',
+                                      data: [{% for number in result_num %} '{{ number }}', {% endfor %}],
+                                      backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(193, 37, 83, 0.8)',
+                                        'rgba(89, 89, 89, 0.8)',
+                                        'rgba(44, 44, 44, 0.8)',
+                                        'rgba(75, 0, 0, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)',
+                                        'rgba(240, 120, 50, 0.8)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(193, 37, 83, 1)',
+                                        'rgba(89, 89, 89, 1)',
+                                        'rgba(44, 44, 44, 1)',
+                                        'rgba(75, 0, 0, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(240, 120, 50, 1)',
+                              
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                  },
+                                  options: {
+                                    scales: {
+                                      y: {
+                                        beginAtZero: true
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                                 L <br>
+                            </div>	
+                          </div>
+
+                          {% endif %}
+
+                          {% if predicted_acads.predictions == 2 %}
+                          <p style="text-align: center; font-size: 20px; color: #000;">Your are expected to have an Academic Performance of FAIRLY SATISFACTORY <br>
+                            by the next semester with a gpa between [2.8100 - 3.5800].</p> 
+                          <br>
+                          <!-- TIME MANAGEMENT -->
+                          <hr style="color: black;">
+                          
+                          <table id="classTable" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                  <th>Time Management Percentage</th>
+                                  <th>Class Attendance and Participation Percentage</th>
+                                  <th>General Study Strategy Percentage</th>
+                                  <th>Exam Preparation Percentage</th>
+                                  <th>Note Taking Percentage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_tm|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_cap|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_gss|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_ep|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_nt|floatformat:2 }}%</td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 40.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 60.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+                                  {% elif result_tm == 80.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_cap == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  {% elif result_gss == 47.61904761904761 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p> 
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_ep == 50.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_ep == 75.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+
+                                  {% elif result_ep == 91.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 40.0 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 60.0 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 66.66666666666666 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 80.0 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% else %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p>This level indicates that you are falling below expectations and may need improvement.</P>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</P>
+                                  {% elif result_cap == 55.55555555555556 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% else %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 47.61904761904761 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% else %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+
+                                  {% elif result_ep == 50.0 %} <p>NThis level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+
+                                  {% elif result_ep == 75.0 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+
+                                  {% elif result_ep == 91.66666666666666 %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% else %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p>This level indicates that your note-taking skills are inadequate and may need improvement.</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% else %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+
+                          <hr style="color: black;">
+                          <br> 
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                          <div class="col-md">
+                            <div class="col-md-12">
+                              <h3 style="color: black;">Study Habits</h3>
+                              <canvas id="myChart" width="500" height="500" style="box-sizing: border-box; height: 500px; width: 500px;"></canvas>
+                              <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: [{% for result in result_list %} '{{ result }}', {% endfor %}],
+                                    datasets: [{
+                                      label: 'Total: ',
+                                      data: [{% for number in result_num %} '{{ number }}', {% endfor %}],
+                                      backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(193, 37, 83, 0.8)',
+                                        'rgba(89, 89, 89, 0.8)',
+                                        'rgba(44, 44, 44, 0.8)',
+                                        'rgba(75, 0, 0, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)',
+                                        'rgba(240, 120, 50, 0.8)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(193, 37, 83, 1)',
+                                        'rgba(89, 89, 89, 1)',
+                                        'rgba(44, 44, 44, 1)',
+                                        'rgba(75, 0, 0, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(240, 120, 50, 1)',
+                              
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                  },
+                                  options: {
+                                    scales: {
+                                      y: {
+                                        beginAtZero: true
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                                  <br>
+                            </div>	
+                          </div>
+                          
+                          {% endif %}
+
+                          {% if predicted_acads.predictions == 3 %}
+                          <p style="text-align: center; font-size: 20px; color: #000;">Your are expected to have an Academic Performance of SATISFACTORY<br>
+                            by the next semester with a gpa between [2.2570 - 2.6987].</p> 
+                          <br>
+                          <!-- TIME MANAGEMENT -->
+                          <hr style="color: black;">
+                          
+                          <table id="classTable" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                  <th>Time Management Percentage</th>
+                                  <th>Class Attendance and Participation Percentage</th>
+                                  <th>General Study Strategy Percentage</th>
+                                  <th>Exam Preparation Percentage</th>
+                                  <th>Note Taking Percentage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_tm|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_cap|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_gss|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_ep|floatformat:2 }}%</td>
+                                <td style="font-size: 25px; color: #000; text-align: center; font-weight: 600;">{{ result_nt|floatformat:2 }}%</td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 40.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 60.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p> 
+                                  {% elif result_tm == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+                                  {% elif result_tm == 80.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_cap == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p> 
+                                  {% elif result_gss == 47.61904761904761 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p> 
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_ep == 50.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_ep == 75.0 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p> 
+
+                                  {% elif result_ep == 91.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Warning</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Needs Improvement</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Proficient</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% else %} <p style="font-size: 15px; color: #000; text-align: center; font-weight: 600;">Advanced</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{% if result_tm == 33.33333333333333 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 40.0 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  {% elif result_tm == 46.666666666666664 %} <p>This level indicates that you are struggling to manage your time effectively and may need improvement.</p>
+                                  
+                                  {% elif result_tm == 53.333333333333336 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 60.0 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+                                  {% elif result_tm == 66.66666666666666 %} <p>This level indicates that your time management skills could be improved, but you are still managing your time effectively to some extent.</p>
+
+                                  {% elif result_tm == 73.33333333333333 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 80.0 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+                                  {% elif result_tm == 86.66666666666667 %} <p>You effectively prioritizes academic tasks, stays focused and on track, adjusts to changing situations, and balances academic and personal responsibilities.</p>
+
+                                  {% elif result_tm == 93.33333333333333 %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% else %} <p>This level indicates that you have an exceptional time management skills, consistently completing tasks ahead of deadlines and effectively balancing multiple responsibilities.</p>
+                                  {% endif %}
+                                </td>
+
+
+                                <td>
+                                  {% if result_cap == 33.33333333333333 %} <p>This level indicates that you are falling below expectations and may need improvement.</P>
+
+                                  {% elif result_cap == 44.44444444444444 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</P>
+                                  {% elif result_cap == 55.55555555555556 %} <p>This level indicates that your participation and attendance are below average and need to be improved.</p>
+
+                                  {% elif result_cap == 66.66666666666666 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+                                  {% elif result_cap == 77.77777777777779 %} <p>This level indicates that you meet the expectations for class attendance and participation.</p>
+
+                                  {% elif result_cap == 88.88888888888889 %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% else %} <p>This level indicates that you are consistently exceeding expectations in class attendance and participation and demonstrating exceptional engagement and involvement in the course.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_gss == 33.33333333333333 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 38.095238095238095 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 42.857142857142854 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+                                  {% elif result_gss == 47.61904761904761 %} <p>This level indicates that your study strategies are ineffective and may need improvement.</p>
+
+                                  {% elif result_gss == 52.38095238095239 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 57.14285714285714 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 61.904761904761905 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+                                  {% elif result_gss == 66.66666666666666 %} <p>This level indicates that your study strategies could be more effective and could use some improvement.</p>
+
+                                  {% elif result_gss == 71.42857142857143 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 76.19047619047619 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 80.95238095238095 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+                                  {% elif result_gss == 85.71428571428571 %} <p>This level indicates that you have established effective study strategies and consistently uses them to prepare for coursework.</p>
+
+                                  {% elif result_gss == 90.47619047619048 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% elif result_gss == 95.23809523809523 %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% else %} <p>This level indicates that your study strategies are highly effective and demonstrate an exceptional level of preparation for coursework.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_ep == 33.33333333333333 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+                                  {% elif result_ep == 41.66666666666667 %} <p>This level indicates that you are struggling to prepare for exams and may need improvement.</p>
+
+                                  {% elif result_ep == 50.0 %} <p>NThis level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 58.333333333333336 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+                                  {% elif result_ep == 66.66666666666666 %} <p>This level indicates that your exam preparation could be more thorough and effective.</p>
+
+                                  {% elif result_ep == 75.0 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+                                  {% elif result_ep == 83.33333333333334 %} <p>This level indicates that you are effectively preparing for exams, demonstrating a good understanding of the course material.</p>
+
+                                  {% elif result_ep == 91.66666666666666 %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% else %} <p>This level indicates that you are consistently demonstrating exceptional exam preparation, exhibiting a deep understanding of the course material and effectively applying their knowledge to perform well on exams.</p>
+                                  {% endif %}
+
+                                </td>
+
+                                <td>
+                                  {% if result_nt == 33.33333333333333 %} <p>This level indicates that your note-taking skills are inadequate and may need improvement.</p>
+
+                                  {% elif result_nt == 44.44444444444444 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+                                  {% elif result_nt == 55.55555555555556 %} <p>This level indicates that your note-taking skills could be improved and made more effective.</p>
+
+                                  {% elif result_nt == 66.66666666666666 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+                                  {% elif result_nt == 77.77777777777779 %} <p>This level indicates that you are effectively taking and organizing notes, accurately capturing important information and concepts.</p>
+
+                                  {% elif result_nt == 88.88888888888889 %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% else %} <p>This level indicates that your note-taking skills are exceptional, demonstrating mastery of the process and effectively using their notes to reinforce their understanding of the course material.</p>
+                                  {% endif %}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+
+                          <hr style="color: black;">
+                          <br> 
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                          <div class="col-md">
+                            <div class="col-md-12">
+                              <h3 style="color: black;">Study Habits</h3>
+                              <canvas id="myChart" width="500" height="500" style="box-sizing: border-box; height: 500px; width: 500px;"></canvas>
+                              <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: [{% for result in result_list %} '{{ result }}', {% endfor %}],
+                                    datasets: [{
+                                      label: 'Total: ',
+                                      data: [{% for number in result_num %} '{{ number }}', {% endfor %}],
+                                      backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(193, 37, 83, 0.8)',
+                                        'rgba(89, 89, 89, 0.8)',
+                                        'rgba(44, 44, 44, 0.8)',
+                                        'rgba(75, 0, 0, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)',
+                                        'rgba(240, 120, 50, 0.8)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(193, 37, 83, 1)',
+                                        'rgba(89, 89, 89, 1)',
+                                        'rgba(44, 44, 44, 1)',
+                                        'rgba(75, 0, 0, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(240, 120, 50, 1)',
+                              
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                  },
+                                  options: {
+                                    scales: {
+                                      y: {
+                                        beginAtZero: true
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                                  <br>
+                            </div>	
+                          </div>
+                          {% endif %}
+
+                        <button style="font-size: 15px; padding-left: 20px; padding-right: 20px; float: right;" type="button" class="btn btn-primary"><a href="{% url 'profile' %}" style="text-decoration: none;">OK</a></button>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    <br>
+    <br>
+    <br>
+  </div>
+</div>
+
+
+<script>
+  var predict = document.getElementById("pred");
+  if (predict== "['Superior']"){
+        
+      function myFunction() {
+        alert("Page is loaded");
+      }
+
+  }
+
+</script>
+{% endblock %}

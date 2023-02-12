@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Log-in{% endblock %}
+
+{% block content %} 
+
+<!DOCTYPE html>
+<html>
+    
+<head>
+	
+	<title>Login</title>
+
+
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			background: white !important;
+		}
+		.user_card {
+			width: 500px;
+			height: auto;
+			margin-top: 10%;
+			margin-bottom: 10%;
+			background: #b8b8b8;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 50px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+
+		.form_container {
+			margin-top: 20px;
+		}
+
+		#form-title{
+			color: #fff;
+			
+		}
+
+		.login_btn {
+			width: 100%;
+			background: #fa8484;
+			color: white;
+		}
+
+        .login_btn:hover {
+            background-color: white;
+            color: #fa8484;
+            font-weight: bolder;
+        }
+
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #DC143C;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+
+		#messages{
+			background-color: grey;
+			color: #fff;
+			padding: 10px;
+			margin-top: 10px;
+		}
+	</style>
+
+</head>
+<body>
+	<link href="{%static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}" rel="stylesheet" />
+	<link href="{%static 'css/login.css' %}" rel="stylesheet" />
+
+	<div class="main">
+		<!-- Sign up form -->
+		<section class="sign-in">
+			<div class="container-login">
+				<div class="signin-content">
+					<div class="signin-image">
+						<figure><img src="{% static 'img/signin-image.jpg' %}" alt="sing up image"></figure>
+						<a href="{% url 'register' %}" class="signup-image-link" style="font-weight: 500;">Create an account</a>
+					</div>
+					<div class="signin-form">
+						<h2 class="form-title">Log in</h2>
+						<form method="POST" class="register-form" id="login-form">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="your_name"><i class="fas fa-user"></i></label>
+								<input type="text" name="username" id="your_name" placeholder="Your Username"/>
+							</div>
+							<div class="form-group">
+								<label for="your_pass"><i class="fas fa-key"></i></label>
+								<input type="password" name="password" id="your_pass" placeholder="Password"/>
+							</div>
+							<div class="form-group">
+								<input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+								<label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+							</div>
+
+							<div>
+								Forgot Password? <a href="{% url 'password_reset' %}" style="color: black;">Reset Password</a>
+							</div>
+
+							<div class="form-group form-button">
+								<input type="submit" name="signin" id="signin" class="form-submit" value="Login"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	{% for msg in messages %}
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script>
+			swal("{{msg}}");
+		</script>
+		{% if msg.tag == 'success' %}
+			<script>
+				var m = "{{message}}"
+				swal({
+					title: "Log-in Success!",
+					icon: "success",
+					button: "Ok",
+					});
+			</script>
+		{% endif %}
+	{% endfor %}
+
+<script>
+	$("#signin").click(function(){
+		var your_name = $("#your_name").val();
+		var your_pass = $("#your_pass").val();
+
+		if(your_name == '' || your_pass == ''){
+			swal({
+				title:"Emply Fields!",
+				text: "Please check the missing field!",
+				icon: "Warning",
+				button: "OK",
+			});
+		}else{
+			swal({
+			title: "Log-in Success!",
+			icon: "success",
+			button: "Ok",
+			});
+		}
+	})
+</script>
+
+
+
+
+</body>
+
+</html>
+
+{% endblock %}

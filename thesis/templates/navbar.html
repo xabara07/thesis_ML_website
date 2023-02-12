@@ -1,0 +1,95 @@
+{% load static %}
+
+<style>
+    @media (min-width: 1400px) {
+  .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 1320px;
+  }
+}
+</style>
+
+<nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav" style="background-color: #DC143C;">
+    <div class="container">
+        <!-- <a href="#"><img src="static/img/wmsu.png" class="logo"></a> -->
+        <a class="navbar-brand" href="{% url 'index' %}"><img style="height: 50px; width: 50px;" src="{% static 'img/wmsu.png' %}"> </a>
+        <button class="navbar-toggler text-uppercase font-weight-bold sa-bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <a style="text-decoration: none; letter-spacing: 2px; font-size: 20px; color: white;" 
+                href="{% url 'index' %}">Academic Performance Prediction
+            </a>
+            <ul class="navbar-nav ms-auto">
+                {% url 'index' as index_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_url %}active{% endif %}" href="{{ index_url }}">Home</a></li>
+                {% url 'about' as about_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == about_url %}active{% endif %}" href="{{ about_url }}">About</a></li>
+                {% url 'personality' as personality_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == personality_url %}active{% endif %}" href="{{ personality_url }}">Personality</a></li>
+                
+                {% if request.user.student %}
+                {% url 'takept' as takept_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == 'takept_url' %}active{% endif %}" href="{{ takept_url }}">Let's Predict</a></li>
+                {% endif %}
+                <!-- {% url 'predict' as predict_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == 'predict' %}active{% endif %}" {% for stud in student %} href="{% url 'predict' stud.id%}"{% endfor %}>Let's Predict</a></li> -->
+             
+
+                <!-- {% if request.user.is_staff %}
+                {% url 'predictions' as predictions_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == predictions_url %}active{% endif %}" href="{{ predictions_url }}">Predictions</a></li>
+                {% endif %} -->
+
+                {% if request.user.is_staff %}
+                {% url 'analytics' as analytics_url %}
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == analytics_url %}active{% endif %}" href="{{ analytics_url }}">Dashboard</a></li>
+                {% endif %}
+            </ul>
+            <hr>
+            
+            <span style="float:right;">
+                {% if user.is_authenticated %}
+                    {% if request.user.student %}
+                        {% url 'profile' as profile_url %}
+                        <span> Hi {% if request.path == profile_url %}{{ user.username}}{% else %}<a style="color: white;" href="{% url 'profile' %}">{{ user.username}}</a>{% endif %}!</span>
+                    {% endif %}
+                    <a style="color: white; padding-left: 20px;" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <span>
+                    <a href="{% url 'login' %}">Login</a>
+                </span>
+                {% endif %}
+            
+            </span>
+        </div>
+    </div>
+</nav>
+
+<!-- 
+<div>
+    {% url 'index' as index_url %}
+    <span>{% if request.path == index_url %}<b>Home{% else %}</b><a href="{{ index_url }}">Home</a>{% endif %} </span>
+
+    {% url 'about' as about_url %}
+    <span>{% if request.path == about_url %}<b>About{% else %}</b><a href="{{ about_url }}">About</a>{% endif %} </span>
+
+    {% url 'personality' as personality_url %}
+    <span>{% if request.path == personality_url %}<b>Personality Type{% else %}</b><a href="{{ personality_url }}">Personality Type</a>{% endif %} </span>
+
+    {% url 'predict' as predict_url %}
+    <span>{% if request.path == predict_url %}<b>Let's Predict!{% else %}</b><a href="{{ predict_url }}">Let's Predict!</a>{% endif %} </span>
+
+    <span style="float:right">
+        {% if user.is_authenticated %}
+            {% url 'profile' as profile_url %}
+            <span>Hi {% if request.path == profile_url %}{{ user.username}}{% else %}<a href="{{ profile_url }}">{{ user.username}}</a>{% endif %}!</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <span>
+            <a href="{% url 'login' %}">Login</a>
+        </span>
+        {% endif %}
+    </span>
+</div>
+ -->

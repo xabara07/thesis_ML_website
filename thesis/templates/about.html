@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<link href="{%static 'css/about.css' %}" rel="stylesheet" />
+
+{% block content %}
+<div class="slideshow-container">
+    <div class="mySlides">
+        <div class="numbertext">1 / 3</div>
+        <img src="{%static 'img/ccs.jpg' %}" style="width: 100%">
+        <div class="text">College of Computing Studies</div>
+    </div>
+    <div class="mySlides">
+        <div class="numbertext">2 / 3</div>
+        <img src="{%static 'img/cwcd.jpg' %}" style="width: 100%">
+        <div class="text">College of Social Work and Community Development</div>
+    </div>
+    <div class="mySlides">
+        <div class="numbertext">3 / 3</div>
+        <img src="{%static 'img/wmsu-main.jpg' %}" style="width: 100%">
+        <div class="text">WMSU</div>
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+<div style="text-align: center;">
+    <span class="dot" onclick="currentSlides(1)"></span>
+    <span class="dot" onclick="currentSlides(2)"></span>
+    <span class="dot" onclick="currentSlides(3)"></span>
+</div>
+<!-- JS Code -->
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1}
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        } 
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = " block";
+        dots[slideIndex - 1].className += " active";
+    }
+    auto-slide
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        for(i = 0; i < slides.length; i++){
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if(slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+        slides[slideIndex - 1].style.display = 'block';
+        setTimeout(showSlides, 2000);
+    }
+</script>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+          <br>
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="about-us">
+                        <div class="info">
+                            <img src="images/design.png" alt="">
+                             <h3 style="text-align: center;">SCOPE AND AUDIENCE</h3>
+                             <p style="text-align: center;">
+                                The scope of the system are the College of Computing Studies and <br>
+                                College of Social Work and Community Development students. <br>
+
+                                <!-- CCS -->
+                                 <h5 style="text-align: center;"> <a href="https://ics-website-604e4.firebaseapp.com/" target="_blank" style="color: black; text-decoration: none;">College of Computing Studies</a></h5>
+                                 
+                                 <th scope="col" class="col-md-12 text-center" style="align-items: center;">
+                                    <button type="button" class="btn btn-secondary" style="font-family: 'Poppins'; font-weight: bolder; display: block; margin: auto; margin-bottom: 10px;"
+                                              data-toggle="modal" data-target="#exampleModalcs">
+                                            BS Computer Science
+                                    </button>
+                                      <!--Bootstrap modal -->
+                                      <div class="modal fade" id="exampleModalcs" tabindex="-1"
+                                          role="dialog" aria-labelledby="exampleModalLabel"
+                                          aria-hidden="true" style="margin-top: 300px;">
+                                          <div class="modal-dialog" role="document">
+                                              <div class="modal-content" style="width: 120%; display: flex; justify-content: center; align-items: center;">
+                                                  <!-- Modal heading -->
+                                                  <div class="modal-header" style="width: 90%; display: flex; justify-content: center; align-items: center;">
+                                                      <h5 style=" color: black; text-align: center; margin: 20px;" class="modal-title w-100" id="exampleModalLabel">
+                                                        Bachelor of Science in Computer Science (BSCS) is a four-year program that includes the study of computing concepts and theories, algorithmic foundations, and new developments in computing.
+                                                      </h5> 
+                                                      <button type="button" class="btn btn-light" class="close"
+                                                          data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true" style="font-size: 30px;">
+                                                              ×
+                                                          </span>
+                                                      </button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </th>
+                                    <th scope="col" class="col-md-12 text-center" style="align-items: center;">
+                                        <button type="button" class="btn btn-secondary" style="font-family: 'Poppins'; font-weight: bolder; display: block; margin: auto;"
+                                                  data-toggle="modal" data-target="#exampleModalit">
+                                                BS Information Technology
+                                        </button>
+                                          <!--Bootstrap modal -->
+                                          <div class="modal fade" id="exampleModalit" tabindex="-1"
+                                              role="dialog" aria-labelledby="exampleModalLabel"
+                                              aria-hidden="true" style="margin-top: 300px;">
+                                              <div class="modal-dialog" role="document">
+                                                  <div class="modal-content" style="width: 120%; display: flex; justify-content: center; align-items: center;">
+                                                      <!-- Modal heading -->
+                                                      <div class="modal-header" style="width: 90%; display: flex; justify-content: center; align-items: center;">
+                                                          <h5 style=" color: black; text-align: center; margin: 20px;" class="modal-title w-100" id="exampleModalLabel">
+                                                            Bachelor of Science in Information Technology (BSIT) program is a four-year degree program which focuses on the study of computer utilization and computer software to plan, install, customize, operate, manage, administer and maintain information technology infrastructure.
+                                                          </h5> 
+                                                          <button type="button" class="btn btn-light" class="close"
+                                                              data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true" style="font-size: 30px;">
+                                                                  ×
+                                                              </span>
+                                                          </button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </th>
+                                        <br>
+
+                                        <!-- CSWCD -->
+                                        <h5 style="text-align: center;"> <a href="#" style="color: black; text-decoration: none;">College of Social Work and Community Development</a></h5>
+                                 
+                                 <th scope="col" class="col-md-12 text-center" style="align-items: center;">
+                                    <button type="button" class="btn btn-secondary" style="font-family: 'Poppins'; font-weight: bolder; display: block; margin: auto; margin-bottom: 10px;"
+                                              data-toggle="modal" data-target="#exampleModalcd">
+                                            BS Community Development
+                                    </button>
+                                      <!--Bootstrap modal -->
+                                      <div class="modal fade" id="exampleModalcd" tabindex="-1"
+                                          role="dialog" aria-labelledby="exampleModalLabel"
+                                          aria-hidden="true" style="margin-top: 300px;">
+                                          <div class="modal-dialog" role="document">
+                                              <div class="modal-content" style="width: 120%; display: flex; justify-content: center; align-items: center;">
+                                                  <!-- Modal heading -->
+                                                  <div class="modal-header" style="width: 90%; display: flex; justify-content: center; align-items: center;">
+                                                      <h5 style=" color: black; text-align: center; margin: 20px;" class="modal-title w-100" id="exampleModalLabel">
+                                                        Bachelor of Science in Community Development (BSCD) is a four-year degree program that teaches students how to plan, develop, implement, monitor, and evaluate community projects.
+                                                      </h5> 
+                                                      <button type="button" class="btn btn-light" class="close"
+                                                          data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true" style="font-size: 30px;">
+                                                              ×
+                                                          </span>
+                                                      </button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </th>
+                                    <th scope="col" class="col-md-12 text-center" style="align-items: center;">
+                                        <button type="button" class="btn btn-secondary" style="font-family: 'Poppins'; font-weight: bolder; display: block; margin: auto;"
+                                                  data-toggle="modal" data-target="#exampleModalsw">
+                                                BS Social Work
+                                        </button>
+                                          <!--Bootstrap modal -->
+                                          <div class="modal fade" id="exampleModalsw" tabindex="-1"
+                                              role="dialog" aria-labelledby="exampleModalLabel"
+                                              aria-hidden="true" style="margin-top: 300px;">
+                                              <div class="modal-dialog" role="document">
+                                                  <div class="modal-content" style="width: 120%; display: flex; justify-content: center; align-items: center;">
+                                                      <!-- Modal heading -->
+                                                      <div class="modal-header" style="width: 90%; display: flex; justify-content: center; align-items: center;">
+                                                          <h5 style=" color: black; text-align: center; margin: 20px;" class="modal-title w-100" id="exampleModalLabel">
+                                                            Bachelor of Science in Social Work is a four-year degree program designed to provide students with the knowledge and skills in social work practice, social welfare policies, and human welfare.
+                                                          </h5> 
+                                                          <button type="button" class="btn btn-light" class="close"
+                                                              data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true" style="font-size: 30px;">
+                                                                  ×
+                                                              </span>
+                                                          </button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </th>
+                             </p>
+                        </div>
+                        <hr>
+                    
+                        <div class="info">
+                            <img src="images/discount.png" alt="">
+                            <h3 style="text-align: center;">ABOUT THE SYSTEM</h3>
+                            <p style="text-align: center;">
+                                A web-based system that will predict Student's Academic Performance with their varying
+                                data inputs such as Personal information, Demographic information, Study Habit, Digital
+                                Learning Resource and GPA.
+                             </p>
+                        </div>
+                        <hr>
+                        <div class="info">
+                            <img src="images/low-price.png" alt="">
+                            <h3 style="text-align: center;">ACADEMIC PERFORMANCE</h3>
+                            <p style="text-align: center;">
+                                 The Academic Performance are: <br>
+                                 SUPERIOR <br>
+                                 VERY SATISFACTORY <br>
+                                 SATISFACTORY <br>
+                                 FAIRLY SATISFACTORY <br>
+                                 BARELY SATISFACTORY
+                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity= "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
+
+{% endblock %}

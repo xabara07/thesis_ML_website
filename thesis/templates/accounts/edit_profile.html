@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Information{% endblock %}
+
+{% block content %}
+
+<style>
+    .profile-pic{
+        max-width: 300px;
+        max-height: 300px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+
+<h1>
+    Edit Profile
+</h1> 
+<br>
+<hr>
+
+<div class="row" style="margin: 30px;">
+    <div class="col-md-3">
+        <div class="card card-body">
+            <a class="btn btn-info" href="{% url 'profile' %}"> &#8592; Back to Profile</a>
+            <hr>
+            <h3 style="text-align: center;">Account Setting</h3>
+            <hr>
+            <img class="profile-pic" src="{{request.user.student.profile_pic.url}}">
+        </div>
+    </div>
+
+    <div class="col-md 9">
+        <div class="card card-body">
+            <form method="POST" enctype="multipart/form-data" style="font-size: 20px;">
+                {% csrf_token %}
+                {{form|crispy}}
+
+                <br>
+                <input style="font-size: 20px; padding-left: 20px; padding-right: 20px;" class="btn btn-primary" type="submit" name="Save">
+            </form>
+        </div>
+    </div>
+</div>
+{% for msg in messages %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal("{{msg}}");
+    </script>
+    {% if msg.tag == 'success' %}
+        <script>
+            var m = "{{message}}"
+        </script>
+    {% endif %}
+{% endfor %}
+<br>
+<br>
+
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .buttons{
+        margin: 20px;
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+    }
+    .btn-color{
+        width: 500px;
+        color: #fff;
+        margin: 20px;
+        font-size: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        height: 70px;
+        border: none;
+        border-radius: 50px;
+        background-size: 300% 100%;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-color.color{
+        background-image: linear-gradient(to right, #DC143C, #fa8484, #edbbbb, #e3d3d3);
+    }
+
+    .btn-color:hover{
+        background-position: 100%;
+        color: black;
+    }
+
+    .btn-color{
+    color: #fff;
+    background: #DC143C;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 15px 9px;
+    border-radius: 50px;
+    transform-origin: center bottom;
+    position: relative;
+    z-index: 1;
+    transition: all 0.5s;
+    }
+    .btn-color:focus{ color: #fff; }
+    .btn-color:hover{
+        color: #fff; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        transform: translate(-2.5px, 0) rotate(-2.5deg);
+    }
+    .btn-color:before,
+    .btn-color:after{
+        content: "";
+        background-color: #d36f6f;
+        transform-origin: 50% 100%;
+        border: none;
+        border-radius: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition:all 0.3s ease-in-out;
+        z-index: -1;
+    }
+    .btn-color:after{ background-color:#e2163f83;border: none;
+        border-radius: 50px; }
+    .btn-color:hover:before{ transform: translate(-2.5px, 0) rotate(5deg); }
+    .btn-color:hover:after{ transform: translate(-5px, 0) rotate(9deg); }
+    @media only screen and (max-width: 767px){
+        .btn-color{ margin-bottom: 30px; }
+    }
+
+    .one:hover{
+        color: black;
+    }
+
+</style>
+<br>
+<br>
+<br>
+<div class="container" style="margin-bottom:    200px;">
+    <div class="row mt-4">
+        <div class="col-md-12 offset-md-0">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div>
+                        <h5 style="text-align: center;">By proceeding to predict your Academic Performance make sure you know your Personality Type.</h5>
+                        <div class="buttons">
+                            
+                            <button class="btn-color color"> 
+                                <a class="one" href="{% url 'predict'%}" style="text-decoration: none;">PROCEED</a>
+                            </button>
+                            
+                        </div> 
+                    </div>
+                    <hr>
+                    <h5 style="text-align: center;">Doesn't know your personality type yet?</h5>
+                    <div class="buttons"> 
+                        <button class="btn-color color">
+                           <a class="one" href="https://www.humanmetrics.com/personality/test" target="_blank" style="text-decoration: none;">Get your Personality Type here!</a>
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

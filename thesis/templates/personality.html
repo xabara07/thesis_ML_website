@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Personality{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+          <br>
+            <h1 style="text-align: center;">The 16 Personality Type Described</h1>
+            <div class="card shadow">
+                <div class="card-body">
+                    <table class="table table-striped table-dark" >
+                        <thead>
+                          <tr>
+                            {% url 'ISTJ' as istj_url %}
+                            <th style="text-align: center;" scope="col"><a href="{{ istj_url }}">ISTJ</a></th>
+
+                            {% url 'ESFJ' as esfj_url %}
+                            <th style="text-align: center;" scope="col"> <a href="{{ esfj_url }}">ESFJ</a></th>
+
+                            {% url 'ENTP' as entp_url %}
+                            <th style="text-align: center;" scope="col"> <a href="{{ entp_url }}">ENTP</a></th>
+
+                            {% url 'ISFJ' as isfj_url %}
+                            <th style="text-align: center;" scope="col"> <a href="{{ isfj_url }}">ISFJ</a></th>
+
+                          </tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                              {% url 'ENFJ' as enfj_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ enfj_url }}">ENFJ</a></th>
+
+                              {% url 'INFJ' as infj_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ infj_url }}">INFJ</a></th>
+
+                              {% url 'ISFP' as isfp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ isfp_url }}">ISFP</a></th>
+
+                              {% url 'INTJ' as intj_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ intj_url }}">INTJ</a></th>
+
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                              {% url 'ENTJ' as entj_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ entj_url }}">ENTJ</a></th>
+                              
+                              {% url 'ESTP' as estp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ estp_url }}">ESTP</a></th>
+
+                              {% url 'INFP' as infp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ infp_url }}">INFP</a></th>
+                              
+                              {% url 'ESFP' as esfp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ esfp_url }}">ESFP</a></th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr> 
+                              {% url 'ESTJ' as estj_url %}
+                              <th style="text-align: center;" scope="col"><a href="{{ estj_url }}">ESTJ</a></th>
+
+                              {% url 'ENFP' as enfp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ enfp_url }}">ENFP</a></th>
+
+                              {% url 'ISTP' as istp_url %}
+                              <th style="text-align: center;" scope="col"> <a href="{{ istp_url }}">ISTP</a></th>
+
+                              {% url 'INTP' as intp_url %}
+                              <th style="text-align: center;" scope="col"><a href="{{ intp_url }}">INTP</a></th>
+
+                            </tr>
+                        </thead>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+  <div class="row mt-4">
+      <div class="col-md-8 offset-md-2">
+          <div class="card shadow">
+              <div class="card-body">
+                <div class="info-img">
+                  <img class="img-jung" src="{% static 'acc-img/jung.jpg' %}" alt="">
+                  <div class="p-text">
+                    <strong>Carl Gustav Jung</strong> was a Swiss psychiatrist whose
+                    work was heavily influenced by psychoanalysis. He worked 
+                    on research projects with Sigmund Freud and was significantly 
+                    affected by him. In the end, though, Jung rejected a lot of 
+                    Freud's ideas. Jung is well recognized for his work on the 
+                    human mind, dream analysis, and personality.
+                    <br>
+                    <br>
+                    The psychological types hypothesis developed by Carl G. Jung 
+                    [Jung, 1971] states that persons may be classified based on 
+                    their preferred general attitude: <strong>Extraverted (E) vs. Introverted (I),</strong>
+                    which of the two perceptual functions they prefer: <strong>Sensing (S) vs. Intuition (N), </strong>
+                    and which of the two judgment duties they prefer to perform: <strong>Thinking (T) vs. Feeling (F).</strong>
+                    The three regions of choice that Jung identified are contrasts (i.e. bipolar dimensions where each pole 
+                    represents a different preference). Jung also suggested that one of the four functions listed above—either 
+                    a function of perception or a function of judgment—is prominent in a person. A scholar and practitioner 
+                    of Jung's theory named Isabel Briggs Myers argued that a fourth dichotomy determining personality type be 
+                    the judging-perceiving connection [Briggs Myers, 1980]: <strong>Judging (J) vs. Perceiving (P).</strong>
+                    <br>
+                    <br>
+                    1. <strong>Extraversion – Introversion,</strong> denotes a person's energy expression's source and direction. 
+                    A source of energy for an extravert is mostly found in the outside world, whereas a source of energy for an 
+                    introvert is primarily found within.
+                    <br><br>
+                    2. <strong>Sensing – Intuition, </strong>describes the way that a person processes information. By sensing, 
+                    a person signifies that he or she primarily accepts information that comes from the outside environment. 
+                    When someone has intuition, they tend to believe information they get from their inner or imaginary world.
+                    <br><br>
+                    3. <strong>Thinking – Feeling, </strong>indicates a person's information processing style. Thinking implies 
+                    that a person primarily uses reasoning to reach a choice. Feeling denotes that a person often bases decisions 
+                    on their feelings, i.e., what they believe they should do.
+                    <br><br>
+                    4. <strong>Judging – Perceiving, </strong>demonstrates how a person uses the knowledge that he or she has absorbed. 
+                    Judging entails planning every aspect of one's life and, generally speaking, adhering to one's plans. 
+                    Perceiving indicates a person's propensity to improvise and consider other possibilities.
+                    <br><br>
+                    <em>
+                      There are 16 different combinations, or personality types, that result from all possible permutations of 
+                      preferences in the four dichotomies mentioned above. These combinations indicate which of the two poles in 
+                      each of the four dichotomies dominates in an individual, defining the 16 different personality types.
+                    </em>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+
+
+{% endblock %}

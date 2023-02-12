@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+
+{% block title %}USER{% endblock %}
+
+{% block content %}
+<style>
+    .profile-pic{
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+
+<div class="row">
+  <div class="col-md" style="margin: 40px;">
+      <div class="card card-body">
+          <h5>INFORMATION</h5>
+          <hr>
+          <div style="text-align: left;">
+            <img class="profile-pic" src="{{students.profile_pic.url}}">
+          </div>
+          <P style="font-size: 40px;">Student ID: {{students.studentID}}</P>
+          <p style="font-size: 25px;">Full Name: {{students.firstname}} {{students.lastname}}</p>
+
+          <td>{% if students.stud_course == 1 %} <p style="font-size: 25px;">Course: BS Community Development</p> 
+            {% elif  students.stud_course == 2 %} <p style="font-size: 25px;">Course: BS Information Technology</p> 
+            {% elif  students.stud_course == 3 %} <p style="font-size: 25px;">Course: BS Computer Science</p>
+            {% else %} <p style="font-size: 25px;">Course: BS Social Work</p> {% endif %}</td>
+
+          <p style="font-size: 25px;">Year: {{students.stud_year}}</p>
+          <p style="font-size: 25px;">Age: {{students.stud_age}}</p>
+          {% if students.stud_sex == 0 %} <p style="font-size: 25px;">Sex: Female </p> {% else %} <p style="font-size: 25px;">Sex: Male</p> {% endif %}
+
+          <p style="font-size: 25px;">Email: {{students.email}}</p>
+          <p style="font-size: 25px;">Contact Number: {{students.phone}}</p>
+      </div>
+  </div>
+
+  <div class="col" style="margin: 40px;">
+    <div class="col-md" >
+      <div class="card text-center text-white mb-4" id="total-data">
+        <div class="card-header" style="background-color: #575656;">
+          <h5 class="card-title">TOTAL PREDICTIONS</h5>
+        </div>
+        <div class="card-body" style="background-color: #ebebeb;">
+          <h3 class="card-title" style="color: black; font-size: 40px;">{{data_count}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+
+<div class="modal-body">
+  <div class="card card-body">
+    <h5 class="btn btn-secondary btn-sm btn-block" 
+    style="background-color: #575656; font-size: large; font-weight: 800;">MY PREDICTION</h5>
+    <div style="height: 400px; overflow: auto">
+      <table id="classTable" class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Student ID</th>
+            <th style="text-align: center;">Course</th>
+            <th style="text-align: center;">Year</th>
+            <th style="text-align: center;">Personality Type</th>
+            <th style="text-align: center;">Academic Performance Prediction</th>
+            <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for stud_d in datas %}
+          <tr>
+              <td style="text-align: center;">{{stud_d.students.studentID}}</td>
+              <td style="text-align: center;">{% if stud_d.course == 1 %} <p>BS Community Development</p> 
+                {% elif  stud_d.course == 2 %} <p>BS Information Technology</p> 
+                {% elif  stud_d.course == 3 %} <p>BS Computer Science</p>
+                {% else %} <p>BS Social Work</p> {% endif %}</td>
+              <td style="text-align: center;">{{stud_d.year}}</td>
+              <td style="text-align: center;">{% if stud_d.personality == 0 %} <p>ISTJ</p> 
+                {% elif  stud_d.personality == 1 %} <p>ESFJ</p> 
+                {% elif  stud_d.personality == 2 %} <p>ENTP</p>
+                {% elif  stud_d.personality == 3 %} <p>ISFJ</p>
+                {% elif  stud_d.personality == 4 %} <p>ENFJ</p>
+                {% elif  stud_d.personality == 5 %} <p>INFJ</p>
+                {% elif  stud_d.personality == 6 %} <p>ISFP</p>
+                {% elif  stud_d.personality == 7 %} <p>INTJ</p> 
+                {% elif  stud_d.personality == 8 %} <p>ENTJ</p>
+                {% elif  stud_d.personality == 9 %} <p>ESTP</p>
+                {% elif  stud_d.personality == 10 %} <p>INFP</p> 
+                {% elif  stud_d.personality == 11 %} <p>ESFP</p>
+                {% elif  stud_d.personality == 12 %} <p>ESTJ</p>
+                {% elif  stud_d.personality == 13 %} <p>ENFP</p>
+                {% elif  stud_d.personality == 14 %} <p>ISTP</p>
+                {% else %} <p>INTP</p> {% endif %}</td>
+              <td style="text-align: center; font-size: 20px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px;">
+                {% if stud_d.predictions == 4 %} <p>Superior</p> 
+                {%elif stud_d.predictions == 5 %} <p>Very-Satisfactory</p>
+                {% elif stud_d.predictions == 3 %} <p>Satisfactory</p>
+                {% elif stud_d.predictions == 2 %} <p> Fairly-Satisfactory</p>
+                {% elif stud_d.predictions == 1 %} <p> Excellent </p>
+                {% elif stud_d.predictions == 0 %} <p> Barely-Satisfactory </p>
+                {% endif %}
+              </td>
+              <!-- Button trigger modal -->
+
+              <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash"></i> <a href="{% url 'delete_data' stud_d.id %} " style="text-decoration: none; color: white;">Delete</a></button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+<div class="modal-footer"></div>
+<br>
+</div>
+
+<script>
+  $('#classModal').modal('show')
+</script>
+
+
+{% endblock %}

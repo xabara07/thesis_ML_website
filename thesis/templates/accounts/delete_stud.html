@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}DELETE{% endblock %}
+
+{% block content %}
+<br>
+<h3>Delete Data</h3>
+<hr>
+<div class="container" style="display: flex; align-items: center; justify-content:center;">
+  <div class="row mt-4">
+      <div class="col-md-12 offset-md-0">
+          <div class="card shadow">
+              <div class="card-body">
+                <p>Are you sure you want to delete the Predicted Data?</p>
+
+                <form action="{% url 'delete_stud' item.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="button" class="btn btn-primary"><a href="{% url 'predictions' %}" style="text-decoration: none;">Cancel</a></button>
+                  <input type="Submit" class="btn btn-danger" name="Confirm">
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

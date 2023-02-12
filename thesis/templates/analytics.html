@@ -1,0 +1,562 @@
+{% load static %}
+
+{% block title %}USER{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Dashboard</title>
+  <link href="{%static 'css/profile.css' %}" rel="stylesheet" />
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link href="{%static 'css/main.css' %}" rel="stylesheet" />
+  <link href="{%static 'theme/css/styles.css' %}" rel="stylesheet" />
+
+	<script>
+		$(document).ready(function(){
+			$(".hamburger .hamburger__inner").click(function(){
+			  $(".wrapper").toggleClass("active")
+			})
+
+			$(".top_navbar .fas").click(function(){
+			   $(".profile_dd").toggleClass("active");
+			});
+		})
+	</script>
+</head>
+<body>
+
+  <div class="wrapper" style="background-color: white;">
+    <nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav" >
+      <div class="top_navbar">
+        <div class="hamburger">
+          <div class="hamburger__inner">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+          </div>
+        </div>
+        <div class="menu">
+          <div class="logo">
+            Students Academic Prediction
+          </div>
+          <div class="right_menu">
+            <ul>
+              <li><i class="fas fa-user"></i>
+                <div class="profile_dd">
+                  <span style="float:right; padding-right: 10px;">
+                    {% if user.is_authenticated %}
+                        {% url 'profile' as profile_url %}
+                        <span> Hi {% if request.path == profile_url %}{{ user.username}}{% else %}<a style="color: black; text-decoration: none;" href="">{{ user.username}}</a>{% endif %}!</span>
+                        <a style="color: black;  text-decoration: none;" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                    <span>
+                        <a href="{% url 'login' %}">Login</a>
+                    </span>
+                    {% endif %}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+    
+      *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-family:  "Poppins";
+      }
+    
+        .main_container .sidebar{
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: #DC143C;
+        transition: all 0.3s ease;
+        }
+    
+        .top_navbar .hamburger{
+        width: 103px;
+        background: #DC143C;
+        position: relative;
+        font-size: 28px;
+        }
+    
+        .wrapper.active .sidebar{
+        width: 100px;
+        }
+    
+        @media (min-width: 1400px) {
+      .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
+        }
+      }
+      .main_container .container{
+      margin-top: 10px;
+      width: calc(100% - 225px);
+      margin-left: 225px;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+    .top_navbar .menu .right_menu ul {
+    display: flex;
+    PADDING-TOP: 15px;
+    }
+    
+    </style>
+    
+    <div class="main_container">
+        <div class="sidebar">
+          <div class="sidebar__inner">
+            <div class="profile">
+              <div class="img">
+                <img src="static/acc-img/wmsu.png" alt="profile_pic">
+              </div>
+              <div class="profile_info">
+                <h3>Welcome</h3>
+                {% if user.is_authenticated %}
+                    {% url 'profile' as profile_url %}
+                    <span>{% if request.path == profile_url %}{{ user.username}}{% else %}<a href="" style="color: white; text-transform: uppercase; text-decoration: none;">{{ user.username}}</a>{% endif %}!</span>
+                {% endif %}
+              </div>
+            </div>
+            <ul style="text-decoration: none;">
+              <li>
+                <a href="{% url 'analytics' %}">
+                  <span class="icon"><i class="fas fa-chart-pie"></i></span>
+                  <span class="title">Analytics</span>
+                </a>
+              </li>
+              <li >
+                <a href="{% url 'prediction' %}">
+                  <span class="icon"><i class="fab fa-elementor"></i></span>
+                  <span  class="title">Prediction List</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'students_list' %}">
+                  <span class="icon"><i class="fab fa-elementor"></i></span>
+                  <span class="title">Student List</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'index' %}">
+                  <span class="icon"><i class="fas fa-border-all"></i></span>
+                  <span class="title">Home</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container" >
+          <div class="row" style="padding-left: 30px; padding-top: 30px;">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <div class="row">
+            
+              <!-- GENDER -->
+              <h5>TOTAL STUDENTS: {{total_students}}</h5>
+              <h2>Student's Data</h2>
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <h3>Gender</h3>
+                    <canvas id="myChart" width="236" height="236" style="display: block; box-sizing: border-box; height: 378px; width: 378px;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                          labels: [{% for gender in gender_list %} '{{ gender }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in gender_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+
+              <!-- YEAR -->
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h3>Year</h3>
+                    <canvas id="myChart2" width="281" height="281" style="display: block; box-sizing: border-box; height: 300; width: 300;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart2').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: [{% for year in year_list %} '{{ year }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in year_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+
+              <!-- COURSE -->
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h3>Course</h3>
+                    <canvas id="myChart3" width="281" height="281" style="display: block; box-sizing: border-box; height: 300; width: 300;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart3').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                          labels: [{% for course in course_list %} '{{ course }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in course_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <hr>
+          <br>
+
+          <!-- 2ND ROW -->
+          <div class="row" style="padding-left: 30px;">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <div class="row">
+              <!-- SCHOLAR -->
+              <h5>TOTAL PREDICTED DATA: {{total_datas}}</h5>
+              <h2>Student's Predicted Data</h2>
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <h3>Scholar</h3>
+                    <canvas id="myChart4" width="236" height="236" style="display: block; box-sizing: border-box; height: 378px; width: 378px;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart4').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: [{% for scholar in scholar_list %} '{{ scholar }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in scholar_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+
+              <!-- WORKING STUDENTS -->
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h3>Working Student</h3>
+                    <canvas id="myChart5" width="281" height="281" style="display: block; box-sizing: border-box; height: 300; width: 300;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart5').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                          labels: [{% for work in work_list %} '{{ work }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in work_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+
+              <!-- SOCIO -->
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h3>Socio-Economic Status</h3>
+                    <canvas id="myChart6" width="281" height="281" style="display: block; box-sizing: border-box; height: 300; width: 300;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart6').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: [{% for support in sup_list %} '{{ support }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in sup_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+
+              <!-- PERSONALITY -->
+              
+
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- 3RD ROW -->
+          <div class="row" style="padding-left: 30px;">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+              <!-- PERSONALITY -->
+              <div class="col" style="width:300; height:300;">
+                <div class="col-md">
+                  <div class="col-md-8">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h3>Personality Type</h3>
+                    <canvas id="myChart7" width="281" height="281" style="display: block; box-sizing: border-box; height: 300; width: 300;"></canvas>
+                    <script>
+                      var ctx = document.getElementById('myChart7').getContext('2d');
+                      var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: [{% for personality in per_list %} '{{ personality }}', {% endfor %}],
+                          datasets: [{
+                            label: 'Total: ',
+                            data: [{% for number in per_number %} '{{ number }}', {% endfor %}],
+                            backgroundColor: [
+                              'rgba(255, 99, 132, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(240, 120, 50, 0.8)',
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(240, 120, 50, 1)',
+                    
+                          ],
+                          borderWidth: 2
+                      }]
+                        },
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true
+                            }
+                          }
+                        }
+                      });
+                    </script>
+                        <br>
+                  </div>	
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+{% endblock %}

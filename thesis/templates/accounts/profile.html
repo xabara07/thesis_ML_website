@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{ % include 'accounts/user.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1 style="text-transform: uppercase;">
+   {{ user.username}}'s Profile
+</h1> 
+<hr>
+
+<style>
+  .profile-pic{
+      max-width: 200px;
+      max-height: 200px;
+      margin: 0 auto;
+      border-radius: 50%;
+  }
+
+  .buttons{
+        margin: 20px;
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+    }
+    .btn-color{
+        width: 500px;
+        color: #fff;
+        margin: 20px;
+        font-size: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        height: 70px;
+        border: none;
+        border-radius: 50px;
+        background-size: 300% 100%;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-color.color{
+        background-image: linear-gradient(to right, #DC143C, #fa8484, #edbbbb, #e3d3d3);
+    }
+
+    .btn-color:hover{
+        background-position: 100%;
+        color: black;
+    }
+
+    .btn-color{
+    color: #fff;
+    background: #DC143C;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 15px 9px;
+    border-radius: 50px;
+    transform-origin: center bottom;
+    position: relative;
+    z-index: 1;
+    transition: all 0.5s;
+    }
+    .btn-color:focus{ color: #fff; }
+    .btn-color:hover{
+        color: #fff; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        transform: translate(-2.5px, 0) rotate(-2.5deg);
+    }
+    .btn-color:before,
+    .btn-color:after{
+        content: "";
+        background-color: #d36f6f;
+        transform-origin: 50% 100%;
+        border: none;
+        border-radius: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition:all 0.3s ease-in-out;
+        z-index: -1;
+    }
+    .btn-color:after{ background-color:#e2163f83;border: none;
+        border-radius: 50px; }
+    .btn-color:hover:before{ transform: translate(-2.5px, 0) rotate(5deg); }
+    .btn-color:hover:after{ transform: translate(-5px, 0) rotate(9deg); }
+    @media only screen and (max-width: 767px){
+        .btn-color{ margin-bottom: 30px; }
+    }
+
+    .one:hover{
+        color: black;
+    }
+</style>
+
+<div class="row">
+  <div class="col-md" style="margin: 40px;">
+      <div class="card card-body">
+          <h5>INFORMATION</h5>
+          <hr>
+          <div style="text-align: left;">
+            <img class="profile-pic" src="{{request.user.student.profile_pic.url}}">
+          </div>
+          <P style="font-size: 40px;">Student ID: {{stud.studentID}}</P>
+          <p style="font-size: 25px;">Full Name: {{stud.firstname}} {{stud.lastname}}</p>
+
+          <td>{% if stud.stud_course == 1 %} <p style="font-size: 25px;">Course: BS Community Development</p> 
+            {% elif  stud.stud_course == 2 %} <p style="font-size: 25px;">Course: BS Information Technology</p> 
+            {% elif  stud.stud_course == 3 %} <p style="font-size: 25px;">Course: BS Computer Science</p>
+            {% elif stud.stud_course == 4 %} <p style="font-size: 25px;">Course: BS Social Work</p> 
+            {% else %} <p style="font-size: 25px;">Course: None</p>
+            {% endif %}</td>
+
+          <p style="font-size: 25px;">Year: {{stud.stud_year}}</p>
+          <p style="font-size: 25px;">Age: {{stud.stud_age}}</p>
+          {% if stud.stud_sex == 0 %} <p style="font-size: 25px;">Sex: Female </p> {% else %} <p style="font-size: 25px;">Sex: Male</p> {% endif %}
+
+          <p style="font-size: 25px;">Email: {{stud.email}}</p>
+          <p style="font-size: 25px;">Contact Number: {{stud.phone}}</p>
+          <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size: 20px; font-style: 400;"> 
+              <a href="{% url 'edit_profile' %}" style="text-decoration: none;"><i class="fa fa-edit" style="color: black;"></i>EDIT PROFILE</a></button>
+          </div>
+      </div>
+
+      <br>
+
+      <div class="card text-center text-white mb-4" id="total-data">
+        <div class="card-header" style="background-color: #575656;">
+          <h5 class="card-title">Calculate your GPA per Semester</h5>
+        </div>
+        <br>
+        <p style="text-align: center; color: black;">Note: Exclude EPIC and NSTP subjects grade in the calculation.</p>
+        <div class="buttons"> 
+            <button class="btn-color color">
+                <a class="one" href="{% url 'gpa'%}" style="text-decoration: none;">Calculate your GPA here!</a>
+            </button>
+        </div> 
+      </div>
+
+    
+  </div>
+
+  <div class="col" style="margin: 40px;">
+    <div class="col-md" >
+      <div class="card text-center text-white mb-4" id="total-data">
+        <div class="card-header" style="background-color: #575656;">
+          <h5 class="card-title">TOTAL PREDICTIONS</h5>
+        </div>
+        <div class="card-body" style="background-color: #ebebeb;">
+          <h3 class="card-title" style="color: black; font-size: 40px;">{{data_cnts}}</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="modal-body">
+            <div class="card card-body">
+              <h5 class="btn btn-secondary btn-sm btn-block" 
+                  style="background-color: #575656; font-size: large; font-weight: 800;">MY PREDICTIONS</h5>
+              <div style="height: 583px; overflow: auto">
+                <div style="height: 700px; overflow: auto">
+                  <table id="classTable" class="table table-bordered table-hover">
+                    <thead>
+                      <th scope="col" style="text-align: center;">No.</th>
+                      <th scope="col" style="text-align: center;">Full Name</th>
+                      <th scope="col" style="text-align: center;">Semester</th>
+                      <th scope="col" style="text-align: center;">Year Level</th>
+                      <th scope="col" style="text-align: center;">Prediction</th>
+                      <th scope="col" style="text-align: center;">Action</th>
+                      <th scope="col" style="text-align: center;">Action</th>
+                    </thead>
+                    <tbody>
+                      {% for data in predicted_acads %}
+                      <tr>
+                        <td style="text-align: center;">{{ forloop.counter }}</td>
+                        <td style="text-align: center;">{{ data.students.firstname}} {{ data.students.lastname}}</td>
+                        <td style="text-align: center;">{{ data.studentId}}</td>
+                        <td style="text-align: center;">{{ data.year}}</td>
+                        <td style="text-align: center; font-size: 20px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px;">
+                          {% if data.predictions == 4 %} <p>Superior</p> 
+                          {%elif data.predictions == 5 %} <p>Very-Satisfactory</p>
+                          {% elif data.predictions == 3 %} <p>Satisfactory</p>
+                          {% elif data.predictions == 2 %} <p> Fairly-Satisfactory</p>
+                          {% elif data.predictions == 1 %} <p> Excellent </p>
+                          {% elif data.predictions == 0 %} <p> Barely-Satisfactory </p>
+                          {% endif %}
+                        </td>
+        
+                        <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash"></i> <a href="{% url 'delete_data' data.id %}" style="text-decoration: none;">Delete</a></button></td>
+                        <td style="text-align: center;"><button class="btn btn-primary"><i class="fa fa-eye"></i> <a href="{% url 'data' data.id %}" style="text-decoration: none; color: white;">View</a></button></td>
+
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
+
+<script>
+ $('#classModal').modal('show')
+</script>
+
+{% endblock %}

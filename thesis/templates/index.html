@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    .masthead{
+    background-image: url("../acc-img/wmsu-campus_2021-05-13_15-03-21.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 100%;
+    
+}
+</style>
+<!-- <img class="masthead-avatar mb-5" src= "{%static 'theme/assets/wmsu.png' %}" alt="..." /> -->
+
+<!-- Masthead-->
+<div class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img class="masthead-avatar mb-5" src="{%static 'img/wmsu.png' %}" alt="..." />
+        <!-- Masthead Heading-->
+        <h2 class="sa-masthead-heading text-uppercase mb-0" style="color:rgb(255, 60, 60); opacity: 100%;">Predicting Students Academic Performance</h2>
+    </div>
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-8 offset-md-2">
+              <br>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 style="text-align: left; font-size: 20px; color: #000;">Purpose of the System:</h3>
+                        <p style="color: black; text-align: left; padding-left: 30px; display: flex;">This system will predict students' academic performance based on the underlying factors.
+
+                            It is a milestone for the education sector to be more adaptive to change.
+                            
+                            To inform all educational stakeholders to be aware of the factor that 
+                            affects student academic performance.</p>
+                        <h3 style="text-align: left; font-size: 20px; color: #000;">Process:</h3>
+                        <p style="color: black; text-align: left; padding-left: 30px;">Upon signing up, make sure to edit your Profile. <br>
+                        You can locate your profile section in the header where your username is being indicated. Click it to open. <br>
+                        Once done, you can now go to "Let's Predict" page to predict your Academic Performance for the next sem. <br>
+                        Make sure to fill your data correctly and answer honetly your study habits in Academic.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+{% endblock %} 
