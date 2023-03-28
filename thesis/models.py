@@ -379,11 +379,12 @@ class Data(models.Model):
     # m_speed = models.PositiveBigIntegerField(choices=MODERATE, null=True, verbose_name=u"Moderate")
     l_speed = models.PositiveBigIntegerField(choices=LIGHT, null=True, verbose_name=u"Does your internet connection frequently in light speed?")
 
+    datePredicted = models.DateField(auto_now_add=True, null=True)
+
     #Grade
     # gpa = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]  , null=True)
 
-    predictions = models.CharField(max_length=20, blank=True)
-    
+    predictions = models.PositiveBigIntegerField(blank=True)
 
     def calculate_TM(self):
         return(self.TM3 + self.TM4 + self.TM5 + self.TM6 + self.TM7) / 15 * 100

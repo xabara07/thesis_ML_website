@@ -13,7 +13,7 @@ class DataAdmin(admin.ModelAdmin):
                     'desktop', 'laptop', 'mobile', 
                     'wifi', 'c_data',
                     'h_speed', 'l_speed', 
-                    'predictions') 
+                    'predictions', 'datePredicted') 
 
 
 admin.site.register(Data, DataAdmin)

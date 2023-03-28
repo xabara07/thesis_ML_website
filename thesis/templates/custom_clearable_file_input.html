@@ -1,0 +1,10 @@
+{% include "django/forms/widgets/clearable_file_input.html" %}
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var clearCheckbox = document.getElementById("{{ attrs.id }}_clear");
+        if (clearCheckbox) {
+            clearCheckbox.style.display = "none";
+        }
+    });
+</script>

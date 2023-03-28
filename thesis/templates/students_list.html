@@ -117,6 +117,18 @@
       PADDING-TOP: 15px;
       }
 
+      .main_container .sidebar ul li a{
+      color: white;
+      font-size: 18px;
+      padding: 20px 30px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
     </style>
     
     <div class="main_container">
@@ -148,7 +160,8 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{% url 'students_list' %}">
+                  {% url 'students_list' as students_list_url %}
+                  <a class="nav-link py-3 js-scroll-trigger {% if request.path == students_list_url %}active{% endif %}" href="{% url 'students_list' %}">
                     <span class="icon"><i class="fab fa-elementor"></i></span>
                     <span class="title">Student List</span>
                   </a>

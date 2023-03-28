@@ -68,6 +68,7 @@
             <th style="text-align: center;">Year</th>
             <th style="text-align: center;">Personality Type</th>
             <th style="text-align: center;">Academic Performance Prediction</th>
+            <th style="text-align: center;">Date Predicted</th>
             <th style="text-align: center;">Action</th>
           </tr>
         </thead>
@@ -105,6 +106,7 @@
                 {% elif stud_d.predictions == 0 %} <p> Barely-Satisfactory </p>
                 {% endif %}
               </td>
+              <td style="text-align: center;">{{stud_d.datePredicted}}</td>
               <!-- Button trigger modal -->
 
               <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash"></i> <a href="{% url 'delete_data' stud_d.id %} " style="text-decoration: none; color: white;">Delete</a></button></td>

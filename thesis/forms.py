@@ -1,6 +1,7 @@
 from dataclasses import fields
 from tkinter import Label
 from django import forms
+from django.forms.widgets import ClearableFileInput
 from  .models import Data, student
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -29,8 +30,11 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class CustomClearableFileInput(ClearableFileInput):
+    template_name = 'custom_clearable_file_input.html'
 
 class studentForm(forms.ModelForm):
+    profile_pic = forms.ImageField(widget=CustomClearableFileInput)
     class Meta:
         model = student
         fields = '__all__'

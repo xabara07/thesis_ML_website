@@ -117,6 +117,17 @@
     PADDING-TOP: 15px;
     }
     
+    .main_container .sidebar ul li a{
+      color: white;
+      font-size: 18px;
+      padding: 20px 30px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
     </style>
     
     <div class="main_container">
@@ -136,7 +147,8 @@
             </div>
             <ul style="text-decoration: none;">
               <li>
-                <a href="{% url 'analytics' %}">
+                {% url 'analytics' as analytics_url %}
+                <a class="nav-link py-3 js-scroll-trigger {% if request.path == analytics_url %}active{% endif %}" href="{% url 'analytics' %}">
                   <span class="icon"><i class="fas fa-chart-pie"></i></span>
                   <span class="title">Analytics</span>
                 </a>
