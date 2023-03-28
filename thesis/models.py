@@ -328,13 +328,12 @@ class Data(models.Model):
     #Demographic
     status = models.PositiveBigIntegerField(choices=STATUS, null=True, verbose_name=u"Socio-Economic Status")
     # support = models.PositiveBigIntegerField(choices=SUPPORT, null=True, verbose_name=u"Family Support?")
+
     scholar = models.PositiveBigIntegerField(choices=SCHOLAR, null=True, verbose_name=u"Are you a Scholar?")
     wstud = models.PositiveBigIntegerField(choices=WORKING, null=True, verbose_name=u"Are you a working student?")
     personality = models.PositiveBigIntegerField(choices=PERSONALITY,null=True, verbose_name=u"Personality Type")
 
     #Study Habits
-    # TM1 = models.PositiveBigIntegerField(choices=TM_1, null=True, verbose_name=u"TM1: I have a study schedule with times set aside to study each subject.")
-    # TM2 = models.PositiveBigIntegerField(choices=TM_2, null=True, verbose_name=u"TM2: I use my free time between classes for reading or reviewing.")
     TM3 = models.PositiveBigIntegerField(choices=TM_3, null=True, verbose_name=u"TM3: I balance my study time with recreation and leisure time.")
     TM4 = models.PositiveBigIntegerField(choices=TM_4, null=True, verbose_name=u"TM4: I have a calendar of the semester and it is marked with exam dates, project due dates and assignments.")
     TM5 = models.PositiveBigIntegerField(choices=TM_5, null=True, verbose_name=u"TM5: I keep a weekly schedule of my classes and activities.")
@@ -357,7 +356,6 @@ class Data(models.Model):
     EP1 = models.PositiveBigIntegerField(choices=EP_1, null=True, verbose_name=u"EP1: I review older material first when studying for exams.")
     EP2 = models.PositiveBigIntegerField(choices=EP_2, null=True, verbose_name=u"EP2: When studying for exams, I review over several chapter.")
     EP3 = models.PositiveBigIntegerField(choices=EP_3, null=True, verbose_name=u"EP3: I study for exams at least five days in advance.")
-    # EP4 = models.PositiveBigIntegerField(choices=EP_4, null=True, verbose_name=u"EP4: I make up exam questions and answer them as I study")
     EP5 = models.PositiveBigIntegerField(choices=EP_5, null=True, verbose_name=u"EP5: I make up exam questions using the same format that the actual exam will use.")
     # EP6 = models.PositiveBigIntegerField(choices=EP_6, null=True, verbose_name=u"EP6: I review for exams with a peer or a small study group.")
 
