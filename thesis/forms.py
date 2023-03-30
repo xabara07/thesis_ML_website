@@ -38,7 +38,7 @@ class studentForm(forms.ModelForm):
     class Meta:
         model = student
         fields = '__all__'
-        exclude = ['user']
+        exclude = ['user', 'email']
 
 
 class GPAForm(forms.Form):

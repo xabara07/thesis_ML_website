@@ -116,7 +116,7 @@
           <p style="font-size: 25px;">Age: {{stud.stud_age}}</p>
           {% if stud.stud_sex == 0 %} <p style="font-size: 25px;">Sex: Female </p> {% else %} <p style="font-size: 25px;">Sex: Male</p> {% endif %}
 
-          <p style="font-size: 25px;">Email: {{stud.email}}</p>
+          <p style="font-size: 25px;">Email: {{ user.email }}</p>
           <p style="font-size: 25px;">Contact Number: {{stud.phone}}</p>
           <div>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size: 20px; font-style: 400;"> 
@@ -138,8 +138,6 @@
             </button>
         </div> 
       </div>
-
-    
   </div>
 
   <div class="col" style="margin: 40px;">
@@ -189,7 +187,6 @@
         
                         <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash"></i> <a href="{% url 'delete_data' data.id %}" style="text-decoration: none;">Delete</a></button></td>
                         <td style="text-align: center;"><button class="btn btn-primary"><i class="fa fa-eye"></i> <a href="{% url 'data' data.id %}" style="text-decoration: none; color: white;">View</a></button></td>
-
                       </tr>
                       {% endfor %}
                     </tbody>
