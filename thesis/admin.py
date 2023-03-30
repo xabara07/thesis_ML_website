@@ -19,7 +19,7 @@ class DataAdmin(admin.ModelAdmin):
 admin.site.register(Data, DataAdmin)
 
 class DataStud(admin.ModelAdmin):
-    list_display = ('studentID', 'firstname', 'lastname', 'stud_course', 'stud_year', 'stud_age', 'stud_sex', 'phone', 'email', 'date_created')
+    list_display = ('studentID', 'firstname', 'lastname', 'stud_course', 'stud_year', 'stud_age', 'stud_sex', 'phone', 'date_created')
 
 
 admin.site.register(student, DataStud)

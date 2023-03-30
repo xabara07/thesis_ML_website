@@ -309,7 +309,6 @@ class student(models.Model):
     stud_age = models.PositiveBigIntegerField(validators = [MinValueValidator(17), MaxValueValidator(40)],null=True, verbose_name=u"Age")
     stud_sex = models.PositiveBigIntegerField(choices=SEX, null=True, verbose_name=u"Sex")
     phone = models.PositiveBigIntegerField(null=True)
-    email = models.CharField(max_length=100, null=True)
     profile_pic = models.ImageField(default="unknown.jpg", null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
